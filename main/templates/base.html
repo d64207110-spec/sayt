@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Наш класс{% endblock %}</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e1b4b);
+    color: #e2e8f0;
+  }
+  a { color: #a5b4fc; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header {
+    background: rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 14px 20px;
+  }
+  .nav {
+    max-width: 800px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .logo { font-size: 22px; font-weight: 700; color: #fff; }
+  .logo:hover { text-decoration: none; }
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+  .nav-right form { margin: 0; }
+  .container { max-width: 800px; margin: 0 auto; padding: 24px 16px; }
+  h1 { margin-top: 0; }
+  .card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 16px 18px; margin-bottom: 14px;
+  }
+  .topic-title { font-size: 18px; font-weight: 600; }
+  .meta { font-size: 13px; color: #94a3b8; margin-top: 6px; }
+  .btn {
+    display: inline-block; border: none; cursor: pointer;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff; padding: 10px 18px; border-radius: 10px;
+    font-size: 15px; font-weight: 600;
+  }
+  .btn:hover { opacity: 0.9; text-decoration: none; }
+  .btn-small { padding: 6px 12px; font-size: 14px; }
+  .btn-ghost { background: rgba(255,255,255,0.1); }
+  input, textarea {
+    width: 100%; padding: 10px 12px; margin-top: 6px;
+    background: rgba(0,0,0,0.3); color: #fff;
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 10px;
+    font-size: 15px; font-family: inherit;
+  }
+  input:focus, textarea:focus { outline: 2px solid #6366f1; }
+  form p { margin: 0 0 14px; }
+  .helptext, ul.errorlist { font-size: 12px; color: #94a3b8; }
+  ul.errorlist { color: #fca5a5; padding-left: 18px; }
+  .post { display: flex; gap: 14px; }
+  .avatar {
+    flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; color: #fff;
+  }
+  .post-body { flex: 1; min-width: 0; }
+  .post-text { white-space: pre-wrap; word-wrap: break-word; margin-top: 6px; }
+  .top-row {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
+  }
+  .center { max-width: 420px; margin: 30px auto; }
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <a class="logo" href="{% url 'topic_list' %}">💬 40 - maktab </a>
+    <div class="nav-right">
+      {% if user.is_authenticated %}
+        <span>👤 {{ user.username }}</span>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button class="btn btn-small btn-ghost" type="submit">Выйти</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}">Войти</a>
+        <a class="btn btn-small" href="{% url 'register' %}">Регистрация</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+</body>
+</html>

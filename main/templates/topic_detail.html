@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{{ topic.title }}{% endblock %}
+{% block content %}
+<p><a href="{% url 'topic_list' %}">← Все темы</a></p>
+<h1>{{ topic.title }}</h1>
+
+{% for post in topic.posts.all %}
+  <div class="card post">
+    <div class="avatar">{{ post.author.username|first|upper }}</div>
+    <div class="post-body">
+      <strong>{{ post.author.username }}</strong>
+      <span class="meta">· {{ post.created|date:"d.m.Y H:i" }}</span>
+      <div class="post-text">{{ post.text }}</div>
+    </div>
+  </div>
+{% endfor %}
+
+<div class="card">
+  {% if user.is_authenticated %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn" type="submit">Отправить</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}">Войди</a> или <a href="{% url 'register' %}">зарегистрируйся</a>, чтобы писать сообщения.</p>
+  {% endif %}
+</div>
+{% endblock %}

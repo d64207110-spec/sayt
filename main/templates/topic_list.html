@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="top-row">
+  <h1>Темы форума</h1>
+  <a class="btn" href="{% url 'topic_new' %}">➕ Создать тему</a>
+</div>
+{% for topic in topics %}
+  <div class="card">
+    <a class="topic-title" href="{% url 'topic_detail' topic.pk %}">{{ topic.title }}</a>
+    <div class="meta">
+      Автор: {{ topic.author.username }} · {{ topic.created|date:"d.m.Y H:i" }} · Сообщений: {{ topic.posts.count }}
+    </div>
+  </div>
+{% empty %}
+  <div class="card">Тем пока нет. Создай первую! 🚀</div>
+{% endfor %}
+{% endblock %}

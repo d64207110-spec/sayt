@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from .models import Topic, Post
 from .forms import TopicForm, PostForm
+from django.contrib.auth.models import User
+from .models import Topic, Post, Profile
+from .forms import TopicForm, PostForm, ProfileForm
 
 
 def topic_list(request):
@@ -51,3 +54,21 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+def profile(request, username):
+    profile_user = get_object_or_404(User, username=username)
+    profile, _ = Profile.objects.get_or_create(user=profile_user)
+    return render(request, 'profile.html', {'profile_user': profile_user, 'profile': profile})
+
+
+@login_required
+def profile_edit(request):
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', username=request.user.username)
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, 'profile_edit.html', {'form': form})

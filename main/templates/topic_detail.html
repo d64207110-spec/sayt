@@ -6,9 +6,15 @@
 
 {% for post in topic.posts.all %}
   <div class="card post">
-    <div class="avatar">{{ post.author.username|first|upper }}</div>
+    <div class="avatar">
+      {% if post.author.profile.avatar %}
+        <img src="{{ post.author.profile.avatar.url }}" alt="">
+      {% else %}
+        {{ post.author.username|first|upper }}
+      {% endif %}
+    </div>
     <div class="post-body">
-      <strong>{{ post.author.username }}</strong>
+      <strong><a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a></strong>
       <span class="meta">· {{ post.created|date:"d.m.Y H:i" }}</span>
       <div class="post-text">{{ post.text }}</div>
     </div>

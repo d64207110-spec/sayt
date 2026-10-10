@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}{{ profile_user.username }}{% endblock %}
+{% block content %}
+<p><a href="{% url 'topic_list' %}">← Все темы</a></p>
+<div class="card profile-card">
+  <div class="avatar avatar-big">
+    {% if profile.avatar %}
+      <img src="{{ profile.avatar.url }}" alt="">
+    {% else %}
+      {{ profile_user.username|first|upper }}
+    {% endif %}
+  </div>
+  <div class="post-body">
+    <h1>{{ profile_user.username }}</h1>
+    <div class="meta">На сайте с {{ profile_user.date_joined|date:"d.m.Y" }}</div>
+    <h3>Обо мне</h3>
+    <div class="post-text">{% if profile.about %}{{ profile.about }}{% else %}Пока ничего не написано.{% endif %}</div>
+    {% if user == profile_user %}
+      <p><a class="btn btn-small" href="{% url 'profile_edit' %}">✏️ Редактировать профиль</a></p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

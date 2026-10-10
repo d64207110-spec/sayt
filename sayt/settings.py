@@ -139,3 +139,5 @@ MAILERS = {
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'topic_list'
 LOGOUT_REDIRECT_URL = 'topic_list'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

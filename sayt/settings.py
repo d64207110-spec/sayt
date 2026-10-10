@@ -31,8 +31,7 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 if not DEBUG:
-    # Замените на свой настоящий адрес, например 'mysite.onrender.com'
-    ALLOWED_HOSTS.append('ваш-домен.com')
+    ALLOWED_HOSTS.append('doniyor13453.pythonanywhere.com')
 
 
 # Application definition
@@ -49,7 +48,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -126,6 +124,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
@@ -139,5 +140,3 @@ MAILERS = {
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'topic_list'
 LOGOUT_REDIRECT_URL = 'topic_list'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'

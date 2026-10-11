@@ -13,10 +13,29 @@
   <div class="post-body">
     <h1>{{ profile_user.username }}</h1>
     <div class="meta">На сайте с {{ profile_user.date_joined|date:"d.m.Y" }}</div>
+    {% if profile.is_banned %}
+      <p class="meta">🚫 Пользователь забанен</p>
+    {% endif %}
     <h3>Обо мне</h3>
     <div class="post-text">{% if profile.about %}{{ profile.about }}{% else %}Пока ничего не написано.{% endif %}</div>
+
     {% if user == profile_user %}
       <p><a class="btn btn-small" href="{% url 'profile_edit' %}">✏️ Редактировать профиль</a></p>
+    {% endif %}
+
+    {% if user.is_staff and user != profile_user and not profile_user.is_staff %}
+      {% if profile.is_banned %}
+        <form method="post" action="{% url 'user_unban' profile_user.username %}">
+          {% csrf_token %}
+          <button class="btn btn-small" type="submit">✅ Разбанить</button>
+        </form>
+      {% else %}
+        <form method="post" action="{% url 'user_ban' profile_user.username %}"
+              onsubmit="return confirm('Забанить {{ profile_user.username|escapejs }}?');">
+          {% csrf_token %}
+          <button class="btn btn-small btn-ghost" type="submit">🚫 Забанить</button>
+        </form>
+      {% endif %}
     {% endif %}
   </div>
 </div>

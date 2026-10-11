@@ -6,9 +6,12 @@ urlpatterns = [
     path('', views.topic_list, name='topic_list'),
     path('topic/new/', views.topic_new, name='topic_new'),
     path('topic/<int:pk>/', views.topic_detail, name='topic_detail'),
+    path('topic/<int:pk>/delete/', views.topic_delete, name='topic_delete'),
     path('register/', views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('profile/edit/', views.profile_edit, name='profile_edit'),
     path('profile/<str:username>/', views.profile, name='profile'),
+    path('user/<str:username>/ban/', views.user_ban, name='user_ban'),
+    path('user/<str:username>/unban/', views.user_unban, name='user_unban'),
 ]

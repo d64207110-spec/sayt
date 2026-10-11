@@ -28,6 +28,7 @@ class Profile(models.Model):
     avatar = models.ImageField('Аватарка', upload_to='avatars/', blank=True, null=True)
     about = models.TextField('Обо мне', max_length=1000, blank=True,
                              help_text='Расскажи о себе: что любишь, чем увлекаешься и т.д.')
+    is_banned = models.BooleanField('Забанен', default=False)
 
     def __str__(self):
         return f'Профиль {self.user.username}'

@@ -1,9 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}Наш класс{% endblock %}</title>
+<link rel="icon" href="{% static 'logo.png' %}">
 <style>
   * { box-sizing: border-box; }
   body {
@@ -24,7 +26,11 @@
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 10px;
   }
-  .logo { font-size: 22px; font-weight: 700; color: #fff; }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 22px; font-weight: 700; color: #fff;
+  }
+  .logo img { height: 36px; width: auto; border-radius: 8px; }
   .logo:hover { text-decoration: none; }
   .nav-right { display: flex; align-items: center; gap: 14px; }
   .nav-right form { margin: 0; }
@@ -79,7 +85,10 @@
 <body>
 <header>
   <div class="nav">
-    <a class="logo" href="{% url 'topic_list' %}">💬 40 - maktab </a>
+    <a class="logo" href="{% url 'topic_list' %}">
+      <img src="{% static 'logo.png' %}" alt="">
+      <span>40 - maktab</span>
+    </a>
     <div class="nav-right">
       {% if user.is_authenticated %}
         <a href="{% url 'profile' user.username %}">👤 {{ user.username }}</a>
